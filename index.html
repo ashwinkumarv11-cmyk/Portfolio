@@ -119,23 +119,27 @@ section .inner{max-width:var(--max-w);margin:0 auto}
 .timeline-item ul li{color:var(--text-dim);font-size:.85rem;line-height:1.6;padding-left:1.1rem;position:relative}
 .timeline-item ul li::before{content:'▹';position:absolute;left:0;color:var(--accent);font-size:.8rem}
 
-/* WORK GALLERY (inside timeline) */
-.work-gallery{display:flex;gap:8px;margin-top:1rem;overflow-x:auto;padding-bottom:4px;scrollbar-width:thin;scrollbar-color:var(--border) transparent}
-.work-gallery::-webkit-scrollbar{height:4px}
-.work-gallery::-webkit-scrollbar-track{background:transparent}
-.work-gallery::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
-.work-gallery img{height:160px;width:auto;min-width:200px;object-fit:cover;border-radius:8px;border:1px solid var(--border);cursor:pointer;transition:transform .3s,border-color .3s;flex-shrink:0}
-.work-gallery img:hover{transform:scale(1.03);border-color:var(--accent)}
-.work-gallery .img-placeholder{height:160px;min-width:200px;border-radius:8px;border:1px dashed var(--border);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.4rem;color:var(--text-dim);font-size:.75rem;font-family:var(--font-mono);flex-shrink:0;background:var(--surface2);cursor:default}
-.work-gallery .img-placeholder span{font-size:1.4rem;opacity:.4}
+/* CAROUSEL */
+.carousel{position:relative;overflow:hidden;background:var(--border);border-radius:var(--radius) var(--radius) 0 0;margin-top:1rem}
+.carousel.work-carousel{border-radius:var(--radius);margin-top:1rem}
+.car-slides{display:flex;transition:transform .45s cubic-bezier(.4,0,.2,1);will-change:transform}
+.car-slides img{min-width:100%;width:100%;object-fit:cover;cursor:pointer;flex-shrink:0;display:block}
+.carousel .car-slides img{height:300px}
+.work-carousel .car-slides img{height:210px}
+.car-btn{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,.55);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.1);color:#fff;font-size:1.2rem;width:36px;height:36px;border-radius:50%;cursor:pointer;z-index:2;display:flex;align-items:center;justify-content:center;transition:all .2s;line-height:1}
+.car-btn:hover{background:rgba(74,158,255,.75);border-color:var(--accent)}
+.car-prev{left:10px}
+.car-next{right:10px}
+.car-counter{position:absolute;top:10px;right:12px;font-family:var(--font-mono);font-size:.68rem;background:rgba(0,0,0,.6);color:#e8e8e8;padding:.2rem .55rem;border-radius:20px;backdrop-filter:blur(4px);letter-spacing:.5px}
+.car-dots{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);display:flex;gap:5px;z-index:2}
+.car-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.35);cursor:pointer;transition:all .2s;border:none;padding:0}
+.car-dot.active{background:var(--accent);transform:scale(1.3)}
 
 /* PROJECTS */
 .projects-grid{display:grid;gap:2.5rem}
 .project-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:border-color .3s,transform .2s}
 .project-card:hover{border-color:var(--accent);transform:translateY(-2px)}
-.project-card .gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:2px;background:var(--border)}
-.project-card .gallery img{width:100%;height:220px;object-fit:cover;transition:transform .4s;cursor:pointer}
-.project-card .gallery img:hover{transform:scale(1.03)}
+.project-card .carousel{border-radius:var(--radius) var(--radius) 0 0;margin-top:0}
 .project-card .info{padding:1.5rem 2rem}
 .project-card h3{font-size:1.15rem;font-weight:700;margin-bottom:.5rem}
 .project-card .badges{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:.8rem}
@@ -659,6 +663,100 @@ const observer = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
 }, { threshold: 0.08 });
 document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+// ── Carousel builder ──
+function buildCarousel(container, imgs, isWork) {
+  const car = document.createElement('div');
+  car.className = isWork ? 'carousel work-carousel' : 'carousel';
+
+  const slides = document.createElement('div');
+  slides.className = 'car-slides';
+  imgs.forEach(img => {
+    img.style.minWidth = '100%';
+    img.style.flexShrink = '0';
+    img.onclick = () => openLightbox(img);
+    slides.appendChild(img);
+  });
+  car.appendChild(slides);
+
+  let current = 0;
+  const counter = document.createElement('div');
+  counter.className = 'car-counter';
+
+  const dots = document.createElement('div');
+  dots.className = 'car-dots';
+
+  function goTo(n) {
+    current = (n + imgs.length) % imgs.length;
+    slides.style.transform = `translateX(-${current * 100}%)`;
+    counter.textContent = `${current + 1} / ${imgs.length}`;
+    dots.querySelectorAll('.car-dot').forEach((d, i) => d.classList.toggle('active', i === current));
+  }
+
+  if (imgs.length > 1) {
+    const prev = document.createElement('button');
+    prev.className = 'car-btn car-prev';
+    prev.innerHTML = '&#10094;';
+    prev.onclick = () => goTo(current - 1);
+
+    const next = document.createElement('button');
+    next.className = 'car-btn car-next';
+    next.innerHTML = '&#10095;';
+    next.onclick = () => goTo(current + 1);
+
+    imgs.forEach((_, i) => {
+      const dot = document.createElement('button');
+      dot.className = 'car-dot' + (i === 0 ? ' active' : '');
+      dot.onclick = () => goTo(i);
+      dots.appendChild(dot);
+    });
+
+    car.appendChild(prev);
+    car.appendChild(next);
+    car.appendChild(dots);
+  }
+
+  car.appendChild(counter);
+  container.parentNode.insertBefore(car, container);
+  container.remove();
+  goTo(0);
+
+  // Touch/swipe support
+  let startX = 0;
+  car.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, {passive:true});
+  car.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - startX;
+    if (Math.abs(dx) > 40) goTo(dx < 0 ? current + 1 : current - 1);
+  }, {passive:true});
+}
+
+function initCarousels() {
+  // Project galleries
+  document.querySelectorAll('.project-card .gallery').forEach(gallery => {
+    const imgs = [...gallery.querySelectorAll('img')];
+    if (!imgs.length) return;
+    let loaded = 0;
+    const valid = [];
+    imgs.forEach(img => {
+      const check = () => { if (img.naturalWidth > 0) valid.push(img); if (++loaded === imgs.length && valid.length) buildCarousel(gallery, valid, false); };
+      img.complete ? check() : (img.onload = check, img.onerror = check);
+    });
+  });
+
+  // Work experience galleries
+  document.querySelectorAll('.work-gallery').forEach(gallery => {
+    gallery.querySelectorAll('.img-placeholder').forEach(p => p.remove());
+    const imgs = [...gallery.querySelectorAll('img')];
+    if (!imgs.length) { gallery.remove(); return; }
+    let loaded = 0;
+    const valid = [];
+    imgs.forEach(img => {
+      const check = () => { if (img.naturalWidth > 0) valid.push(img); if (++loaded === imgs.length) { if (valid.length) buildCarousel(gallery, valid, true); else gallery.remove(); }};
+      img.complete ? check() : (img.onload = check, img.onerror = check);
+    });
+  });
+}
+initCarousels();
 
 // ── A: Floating particle canvas ──
 const canvas = document.getElementById('particle-canvas');
