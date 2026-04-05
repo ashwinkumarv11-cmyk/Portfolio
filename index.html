@@ -4,6 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ashwin Kumar — Mechatronics & Robotics Engineer</title>
+<meta name="description" content="Ashwin Kumar — Mechatronics & Robotics Engineer based in Bristol, UK. 3+ years in sensor assemblies, flex PCBs, and electro-mechanical prototypes. MSc Robotics, University of Bath.">
+<meta property="og:title" content="Ashwin Kumar — Mechatronics & Robotics Engineer">
+<meta property="og:description" content="Portfolio of Ashwin Kumar, Mechatronics & Robotics Engineer based in Bristol, UK. Sensor hardware, embedded systems, ROS, ISO 13485.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://ashwinkumarv11-cmyk.github.io/Portfolio/">
+<meta name="theme-color" content="#0a0a0a">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
@@ -20,28 +26,57 @@ a{color:var(--accent);text-decoration:none;transition:color .2s}
 a:hover{color:var(--accent2)}
 img{max-width:100%;display:block}
 
+/* SCROLL PROGRESS */
+.scroll-progress{position:fixed;top:0;left:0;height:2px;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent2));z-index:300;transition:width .1s linear;border-radius:0 2px 2px 0}
+
 /* NAV */
-nav{position:fixed;top:0;width:100%;background:rgba(10,10,10,.85);backdrop-filter:blur(12px);z-index:100;border-bottom:1px solid var(--border)}
+nav{position:fixed;top:0;width:100%;background:rgba(10,10,10,.88);backdrop-filter:blur(14px);z-index:100;border-bottom:1px solid var(--border)}
 nav .inner{max-width:var(--max-w);margin:0 auto;display:flex;justify-content:space-between;align-items:center;padding:1rem 2rem}
 nav .logo{font-family:var(--font-mono);font-weight:700;font-size:.95rem;color:var(--text);letter-spacing:-.5px}
 nav .links{display:flex;gap:2rem}
-nav .links a{color:var(--text-dim);font-size:.85rem;font-weight:500;letter-spacing:.3px;transition:color .2s}
-nav .links a:hover{color:var(--text)}
+nav .links a{color:var(--text-dim);font-size:.85rem;font-weight:500;letter-spacing:.3px;transition:color .2s;position:relative;padding-bottom:2px}
+nav .links a::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:1px;background:var(--accent);transition:width .2s}
+nav .links a:hover,nav .links a.active{color:var(--text)}
+nav .links a.active::after,nav .links a:hover::after{width:100%}
+
+/* HAMBURGER */
+.menu-toggle{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:4px}
+.menu-toggle span{display:block;width:22px;height:2px;background:var(--text);border-radius:2px;transition:all .3s}
+.menu-toggle.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.menu-toggle.open span:nth-child(2){opacity:0}
+.menu-toggle.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+/* MOBILE NAV DROPDOWN */
+.mobile-nav{display:none;position:absolute;top:100%;left:0;width:100%;background:rgba(10,10,10,.98);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);flex-direction:column;padding:1.2rem 2rem;gap:1.2rem}
+.mobile-nav.open{display:flex}
+.mobile-nav a{color:var(--text-dim);font-size:.95rem;font-weight:500;transition:color .2s}
+.mobile-nav a:hover{color:var(--text)}
 
 /* HERO */
-.hero{min-height:100vh;display:flex;align-items:center;padding:6rem 2rem 4rem}
-.hero .inner{max-width:var(--max-w);margin:0 auto;display:grid;grid-template-columns:1fr 300px;gap:4rem;align-items:center}
-.hero .tag{font-family:var(--font-mono);font-size:.8rem;color:var(--accent);letter-spacing:1px;text-transform:uppercase;margin-bottom:1rem}
+.hero{min-height:100vh;display:flex;align-items:center;padding:6rem 2rem 4rem;position:relative;overflow:hidden}
+/* Dot grid */
+.hero::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle,rgba(74,158,255,.13) 1px,transparent 1px);background-size:38px 38px;pointer-events:none;z-index:0}
+/* Glow blob */
+.hero::after{content:'';position:absolute;top:15%;right:5%;width:500px;height:500px;background:radial-gradient(circle,rgba(74,158,255,.07) 0%,transparent 65%);pointer-events:none;z-index:0;animation:glow-pulse 5s ease-in-out infinite}
+@keyframes glow-pulse{0%,100%{transform:scale(1);opacity:.6}50%{transform:scale(1.12);opacity:1}}
+.hero .inner{max-width:var(--max-w);margin:0 auto;display:grid;grid-template-columns:1fr 300px;gap:4rem;align-items:center;position:relative;z-index:1}
+.hero .tag{font-family:var(--font-mono);font-size:.8rem;color:var(--accent);letter-spacing:1px;text-transform:uppercase;margin-bottom:1rem;min-height:1.2em}
+/* Typewriter cursor */
+.hero .tag::after{content:'|';animation:blink .8s step-end infinite;margin-left:2px}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
 .hero h1{font-size:3rem;font-weight:700;line-height:1.1;margin-bottom:1.5rem;letter-spacing:-1.5px}
 .hero h1 span{color:var(--accent)}
 .hero p{color:var(--text-dim);font-size:1.05rem;line-height:1.7;margin-bottom:2rem;max-width:560px}
 .hero .cta{display:flex;gap:1rem;flex-wrap:wrap}
 .hero .cta a{padding:.75rem 1.5rem;border-radius:var(--radius);font-size:.85rem;font-weight:600;transition:all .2s}
 .btn-primary{background:var(--accent);color:#000}
-.btn-primary:hover{background:var(--accent2);color:#000}
+.btn-primary:hover{background:var(--accent2);color:#000;transform:translateY(-1px)}
 .btn-outline{border:1px solid var(--border);color:var(--text)}
-.btn-outline:hover{border-color:var(--accent);color:var(--accent)}
-.hero .photo{width:280px;height:280px;border-radius:50%;overflow:hidden;border:3px solid var(--border);justify-self:center}
+.btn-outline:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-1px)}
+.btn-cv{border:1px solid var(--accent);color:var(--accent)}
+.btn-cv:hover{background:var(--accent);color:#000;transform:translateY(-1px)}
+.hero .photo{width:280px;height:280px;border-radius:50%;overflow:hidden;border:3px solid var(--border);justify-self:center;position:relative;transition:border-color .3s}
+.hero .photo:hover{border-color:var(--accent)}
 .hero .photo img{width:100%;height:100%;object-fit:cover}
 
 /* SECTIONS */
@@ -55,46 +90,81 @@ section .inner{max-width:var(--max-w);margin:0 auto}
 .about-text{color:var(--text-dim);font-size:.95rem;line-height:1.8}
 .about-text p+p{margin-top:1rem}
 .stats{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
-.stat{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem}
+.stat{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;transition:border-color .3s,transform .2s}
+.stat:hover{border-color:var(--accent);transform:translateY(-2px)}
 .stat .num{font-family:var(--font-mono);font-size:1.8rem;font-weight:700;color:var(--accent)}
 .stat .label{font-size:.8rem;color:var(--text-dim);margin-top:.3rem}
 
+/* EDUCATION */
+.edu-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem}
+.edu-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.75rem;transition:border-color .3s,transform .2s;position:relative;overflow:hidden}
+.edu-card::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:var(--accent);border-radius:3px 0 0 3px}
+.edu-card:hover{border-color:var(--accent);transform:translateY(-2px)}
+.edu-card .degree{font-size:1rem;font-weight:700;margin-bottom:.3rem}
+.edu-card .institution{color:var(--accent);font-size:.875rem;font-weight:500;margin-bottom:.25rem}
+.edu-card .period{font-family:var(--font-mono);font-size:.72rem;color:var(--text-dim);letter-spacing:.5px;margin-bottom:.75rem}
+.edu-card p{color:var(--text-dim);font-size:.85rem;line-height:1.65}
+.edu-card .award{display:inline-block;margin-top:.75rem;font-family:var(--font-mono);font-size:.68rem;padding:.2rem .6rem;border-radius:20px;background:rgba(74,158,255,.1);border:1px solid rgba(74,158,255,.3);color:var(--accent)}
+
 /* EXPERIENCE */
 .timeline{position:relative;padding-left:2rem;border-left:2px solid var(--border)}
-.timeline-item{position:relative;margin-bottom:2.5rem}
-.timeline-item::before{content:'';position:absolute;left:-2.45rem;top:.4rem;width:10px;height:10px;border-radius:50%;background:var(--accent);border:2px solid var(--bg)}
+.timeline-item{position:relative;margin-bottom:2.5rem;transition:padding .2s}
+.timeline-item::before{content:'';position:absolute;left:-2.45rem;top:.4rem;width:10px;height:10px;border-radius:50%;background:var(--accent);border:2px solid var(--bg);transition:box-shadow .2s}
+.timeline-item:hover::before{box-shadow:0 0 0 4px rgba(74,158,255,.2)}
 .timeline-item .period{font-family:var(--font-mono);font-size:.75rem;color:var(--accent);margin-bottom:.3rem}
 .timeline-item h3{font-size:1.1rem;font-weight:700;margin-bottom:.2rem}
 .timeline-item .company{color:var(--text-dim);font-size:.9rem;margin-bottom:.6rem}
 .timeline-item p{color:var(--text-dim);font-size:.85rem;line-height:1.7}
+.timeline-item ul{list-style:none;margin-top:.5rem;display:flex;flex-direction:column;gap:.45rem}
+.timeline-item ul li{color:var(--text-dim);font-size:.85rem;line-height:1.6;padding-left:1.1rem;position:relative}
+.timeline-item ul li::before{content:'▹';position:absolute;left:0;color:var(--accent);font-size:.8rem}
+
+/* WORK GALLERY (inside timeline) */
+.work-gallery{display:flex;gap:8px;margin-top:1rem;overflow-x:auto;padding-bottom:4px;scrollbar-width:thin;scrollbar-color:var(--border) transparent}
+.work-gallery::-webkit-scrollbar{height:4px}
+.work-gallery::-webkit-scrollbar-track{background:transparent}
+.work-gallery::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
+.work-gallery img{height:160px;width:auto;min-width:200px;object-fit:cover;border-radius:8px;border:1px solid var(--border);cursor:pointer;transition:transform .3s,border-color .3s;flex-shrink:0}
+.work-gallery img:hover{transform:scale(1.03);border-color:var(--accent)}
+.work-gallery .img-placeholder{height:160px;min-width:200px;border-radius:8px;border:1px dashed var(--border);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.4rem;color:var(--text-dim);font-size:.75rem;font-family:var(--font-mono);flex-shrink:0;background:var(--surface2);cursor:default}
+.work-gallery .img-placeholder span{font-size:1.4rem;opacity:.4}
 
 /* PROJECTS */
 .projects-grid{display:grid;gap:2.5rem}
-.project-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:border-color .3s}
-.project-card:hover{border-color:var(--accent)}
+.project-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:border-color .3s,transform .2s}
+.project-card:hover{border-color:var(--accent);transform:translateY(-2px)}
 .project-card .gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:2px;background:var(--border)}
 .project-card .gallery img{width:100%;height:220px;object-fit:cover;transition:transform .4s;cursor:pointer}
 .project-card .gallery img:hover{transform:scale(1.03)}
 .project-card .info{padding:1.5rem 2rem}
 .project-card h3{font-size:1.15rem;font-weight:700;margin-bottom:.5rem}
 .project-card .badges{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:.8rem}
-.badge{font-family:var(--font-mono);font-size:.65rem;padding:.25rem .6rem;border-radius:20px;background:var(--surface2);border:1px solid var(--border);color:var(--text-dim)}
+.badge{font-family:var(--font-mono);font-size:.65rem;padding:.25rem .6rem;border-radius:20px;background:var(--surface2);border:1px solid var(--border);color:var(--text-dim);transition:border-color .2s,color .2s}
+.badge:hover{border-color:var(--accent);color:var(--accent)}
 .project-card p{color:var(--text-dim);font-size:.88rem;line-height:1.7}
 
 /* SKILLS */
 .skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem}
-.skill-group{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem}
+.skill-group{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;transition:border-color .3s}
+.skill-group:hover{border-color:rgba(74,158,255,.4)}
 .skill-group h3{font-family:var(--font-mono);font-size:.8rem;color:var(--accent);letter-spacing:1px;text-transform:uppercase;margin-bottom:1rem}
 .skill-tags{display:flex;flex-wrap:wrap;gap:.4rem}
-.skill-tag{font-size:.8rem;padding:.35rem .7rem;border-radius:6px;background:var(--surface2);border:1px solid var(--border);color:var(--text-dim)}
+.skill-tag{font-size:.8rem;padding:.35rem .7rem;border-radius:6px;background:var(--surface2);border:1px solid var(--border);color:var(--text-dim);transition:all .2s;cursor:default}
+.skill-tag:hover{border-color:var(--accent);color:var(--accent);background:rgba(74,158,255,.06)}
 
 /* CONTACT */
 .contact-section{background:var(--surface);border-top:1px solid var(--border)}
 .contact-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:2rem}
 .contact-item{display:flex;align-items:center;gap:1rem}
-.contact-icon{width:44px;height:44px;border-radius:50%;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0}
+.contact-icon{width:44px;height:44px;border-radius:50%;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;transition:border-color .2s,transform .2s}
+.contact-item:hover .contact-icon{border-color:var(--accent);transform:scale(1.08)}
 .contact-item .label{font-size:.75rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:.5px}
 .contact-item .value{font-size:.95rem;color:var(--text)}
+
+/* BACK TO TOP */
+.back-to-top{position:fixed;bottom:2rem;right:2rem;width:44px;height:44px;border-radius:50%;background:var(--surface);border:1px solid var(--border);color:var(--text-dim);font-size:1.1rem;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:99;transition:all .3s;opacity:0;transform:translateY(10px);pointer-events:none}
+.back-to-top.visible{opacity:1;transform:translateY(0);pointer-events:auto}
+.back-to-top:hover{border-color:var(--accent);color:var(--accent);background:rgba(74,158,255,.08)}
 
 /* LIGHTBOX */
 .lightbox{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.92);z-index:200;align-items:center;justify-content:center;cursor:pointer}
@@ -103,37 +173,58 @@ section .inner{max-width:var(--max-w);margin:0 auto}
 
 /* FOOTER */
 footer{text-align:center;padding:2rem;font-size:.75rem;color:var(--text-dim);border-top:1px solid var(--border)}
+footer .footer-links{display:flex;justify-content:center;gap:1.5rem;margin-top:.75rem}
+footer .footer-links a{color:var(--text-dim);font-size:.8rem;transition:color .2s}
+footer .footer-links a:hover{color:var(--accent)}
 
 /* RESPONSIVE */
 @media(max-width:768px){
   .hero .inner{grid-template-columns:1fr;text-align:center}
-  .hero .photo{order:-1;width:200px;height:200px}
+  .hero .photo{order:-1;width:200px;height:200px;margin:0 auto}
   .hero h1{font-size:2rem}
   .hero p{max-width:100%}
   .hero .cta{justify-content:center}
   .about-grid{grid-template-columns:1fr}
   nav .links{display:none}
+  .menu-toggle{display:flex}
   .section-title{font-size:1.6rem}
+  .hero::after{width:300px;height:300px;right:-5%}
 }
 
 /* ANIMATIONS */
-.fade-in{opacity:0;transform:translateY(20px);transition:opacity .6s,transform .6s}
+.fade-in{opacity:0;transform:translateY(22px);transition:opacity .65s,transform .65s}
 .fade-in.visible{opacity:1;transform:translateY(0)}
 </style>
 </head>
 <body>
 
+<!-- SCROLL PROGRESS -->
+<div class="scroll-progress" id="scrollProgress"></div>
+
 <!-- NAV -->
-<nav>
+<nav id="navbar">
   <div class="inner">
     <div class="logo">AK</div>
-    <div class="links">
+    <div class="links" id="navLinks">
       <a href="#about">About</a>
+      <a href="#education">Education</a>
       <a href="#experience">Experience</a>
       <a href="#projects">Projects</a>
       <a href="#skills">Skills</a>
       <a href="#contact">Contact</a>
     </div>
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <!-- Mobile nav dropdown -->
+  <div class="mobile-nav" id="mobileNav">
+    <a href="#about" onclick="closeMobileNav()">About</a>
+    <a href="#education" onclick="closeMobileNav()">Education</a>
+    <a href="#experience" onclick="closeMobileNav()">Experience</a>
+    <a href="#projects" onclick="closeMobileNav()">Projects</a>
+    <a href="#skills" onclick="closeMobileNav()">Skills</a>
+    <a href="#contact" onclick="closeMobileNav()">Contact</a>
   </div>
 </nav>
 
@@ -141,12 +232,13 @@ footer{text-align:center;padding:2rem;font-size:.75rem;color:var(--text-dim);bor
 <section class="hero">
   <div class="inner">
     <div>
-      <div class="tag">Mechatronics & Robotics Engineer</div>
+      <div class="tag" id="heroTag"></div>
       <h1>Hi, I'm <span>Ashwin Kumar</span></h1>
       <p>3+ years taking sensor assemblies, flex PCBs, and electro-mechanical prototypes from early concept through to validated hardware. Experienced across the full hardware loop from bench diagnostics with oscilloscopes and logic analysers through to system-level integration and validation.</p>
       <div class="cta">
         <a href="#projects" class="btn-primary">View Projects</a>
         <a href="#contact" class="btn-outline">Get in Touch</a>
+        <a href="#" class="btn-cv" download>Download CV</a>
       </div>
     </div>
     <div class="photo">
@@ -162,61 +254,129 @@ footer{text-align:center;padding:2rem;font-size:.75rem;color:var(--text-dim);bor
     <h2 class="section-title">Background</h2>
     <div class="about-grid">
       <div class="about-text fade-in">
-        <p>I'm a Mechatronics & Robotics Engineer based in Bristol, UK. My background spans regulated medical devices under ISO 13485 and fast-paced robotics R&D, with deep hands-on work in fault investigation, embedded systems, perception sensors, and ROS.</p>
-        <p>At Earswitch, I design and hand-assemble miniaturised CMOS-based optical sensor modules, evaluate candidate image sensors, and investigate failures across sensor, flex-PCB, and assembly levels. Previously, I've designed PCB layouts for real-time sensing systems, built evaluation rigs for wireless protocols, and led the electrical systems design on a national award-winning Solar EV.</p>
+        <p>I'm a Mechatronics & Robotics Engineer based in Bristol, UK. My background spans regulated medical devices under ISO 13485 and fast-paced R&D, with deep hands-on work in fault investigation, embedded systems, miniature sensors, PCB design and assembly.</p>
+        <p>At Earswitch, I design and prototype miniaturised CMOS-based optical sensor modules, evaluate image sensors, and investigate failures across sensor, flex-PCB, and assembly levels. Previously, I've designed PCB layouts for real-time sensing systems, built evaluation rigs and testing jigs.</p>
         <p>I hold an MSc in Robotics & Autonomous Systems from the University of Bath (Global Leaders Scholarship) and a BEng in Mechatronics from Anna University, India.</p>
       </div>
       <div class="stats fade-in">
         <div class="stat"><div class="num">3+</div><div class="label">Years Experience</div></div>
-        <div class="stat"><div class="num">MSc</div><div class="label">Robotics — Bath</div></div>
-        <div class="stat"><div class="num">ISO</div><div class="label">13485 / 14971</div></div>
-        <div class="stat"><div class="num">ROS</div><div class="label">LiDAR · ToF · Depth</div></div>
+        <div class="stat"><div class="num">PCB</div><div class="label">Design & Assembly</div></div>
+        <div class="stat"><div class="num">CAD</div><div class="label">Prototyping & 3D Printing</div></div>
+        <div class="stat"><div class="num">ISO</div><div class="label">13485 / 14971 / 10993</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education" style="background:var(--surface)">
+  <div class="inner">
+    <div class="section-label">Education</div>
+    <h2 class="section-title">Academic Background</h2>
+    <div class="edu-grid">
+      <div class="edu-card fade-in">
+        <div class="degree">MSc Robotics & Autonomous Systems</div>
+        <div class="institution">University of Bath</div>
+        <div class="period">2021 — 2022 · Bath, UK</div>
+        <p>Specialised in autonomous navigation, perception, and embedded systems. Coursework covered ROS, computer vision, motion planning, and machine learning for robotics. Dissertation focused on sensor characterisation for uncertain environments.</p>
+        <span class="award">🏆 Global Leaders Scholarship</span>
+      </div>
+      <div class="edu-card fade-in">
+        <div class="degree">BEng Mechatronics Engineering</div>
+        <div class="institution">Anna University</div>
+        <div class="period">2016 — 2020 · Chennai, India</div>
+        <p>Foundations in mechanical design, electronics, control systems, and embedded programming. Hands-on projects covering PCB design, PLC programming, and electro-mechanical system integration. Led the electronics team for the Solar EV national competition.</p>
+        <span class="award">🏆 Best Innovation Award — National Solar EV</span>
       </div>
     </div>
   </div>
 </section>
 
 <!-- EXPERIENCE -->
-<section id="experience" style="background:var(--surface)">
+<section id="experience">
   <div class="inner">
     <div class="section-label">Experience</div>
     <h2 class="section-title">Where I've Worked</h2>
     <div class="timeline">
+      <!-- EARSWITCH — upload images to: images/earswitch/product.jpg, sensor.jpg, test-setup.jpg -->
       <div class="timeline-item fade-in">
         <div class="period">Sep 2023 — Present</div>
         <h3>Mechatronics Engineer</h3>
         <div class="company">Earswitch · Bristol, UK</div>
-        <p>End-to-end design and assembly of miniaturised CMOS-based optical sensor modules for health monitoring. Evaluate candidate image sensors, characterise RGB response, white balance, and exposure control. Design enclosures, test jigs, and moulding tools in SolidWorks. Investigate field and bench failures using oscilloscopes, logic analysers (Saleae), and multimeters. Author test protocols and compliance documentation within ISO 13485 and ISO 14971.</p>
+        <ul>
+          <li>Medical device R&D, prototyping and NPI for a miniaturised opto-mechanical health-monitoring sensor assembly. Defining mechanical architecture from concept, tracking project plans, risks and budgets, generating 2D engineering drawings and CAD models (SolidWorks, Inventor) through DFM/DFA and tolerance analysis.</li>
+          <li>Select biocompatible materials for injection-moulded, 3D-printed and thermoformed components, balancing performance, processability and ISO 10993 compliance; perform GD&T and tolerance analysis.</li>
+          <li>Design miniaturised flex PCBs and data-acquisition boards to IEC 60601 with EMC/EMI compliance; perform SMD soldering (0201 assembly) and fault diagnostics; design test jigs, author design specifications, test protocols and compliance reports using bench test equipment (signal analysers, oscilloscopes, multimeters).</li>
+          <li>Produce medical-grade 3D-printed components (Formlabs biocompatible resins, ISO 10993, 25–300 µm); manage pre/post-processing QA, 3D scanning and inventory optimisation.</li>
+          <li>Managing clinical trials, collaborate with cross-functional team, external contract manufacturers, consultants, clinicians and suppliers. Defining requirements, producing assembly documentation, reviewing DFM feedback, and ensuring traceability and delivery milestones to ISO 13485 QMS.</li>
+        </ul>
+        <div class="work-gallery">
+          <img src="images/earswitch/product.jpg" alt="Earswitch sensor module" onclick="openLightbox(this)" onerror="this.style.display='none'">
+          <img src="images/earswitch/sensor.jpg" alt="Earswitch CMOS sensor" onclick="openLightbox(this)" onerror="this.style.display='none'">
+          <img src="images/earswitch/test-setup.jpg" alt="Test & validation setup" onclick="openLightbox(this)" onerror="this.style.display='none'">
+          <div class="img-placeholder"><span>＋</span>Add images</div>
+        </div>
       </div>
+
+      <!-- MOMENTUM SCOOTERS — image at: images/momentum/scooter.jpg -->
       <div class="timeline-item fade-in">
         <div class="period">Mar 2023 — May 2023</div>
         <h3>Robotics Engineer</h3>
         <div class="company">Momentum Scooters · Bristol, UK</div>
-        <p>Designed PCB layout for ARM Cortex-M7 real-time sensing system. Installed the electrical wiring harness for the traction system. Tested and troubleshot the BLDC motor-driver subsystem, tracing faults across power and signal domains.</p>
+        <ul>
+          <li>Designed PCB layout for ARM Cortex-M7 real-time sensing system</li>
+          <li>Installed the electrical wiring harness for the traction system</li>
+          <li>Tested and troubleshot the BLDC motor-driver subsystem, tracing faults across power and signal domains</li>
+        </ul>
+        <div class="work-gallery">
+          <img src="images/momentum/scooter.jpg" alt="Momentum Scooter" onclick="openLightbox(this)" onerror="this.style.display='none'">
+          <img src="images/momentum/pcb.jpg" alt="PCB layout" onclick="openLightbox(this)" onerror="this.style.display='none'">
+          <div class="img-placeholder"><span>＋</span>Add images</div>
+        </div>
       </div>
+
+      <!-- UNIVERSITY OF BATH — upload images to: images/bath/rig.jpg, bench.jpg -->
       <div class="timeline-item fade-in">
         <div class="period">Sep 2022 — Feb 2023</div>
         <h3>Research Assistant (Grade 6)</h3>
         <div class="company">University of Bath · Bath, UK</div>
-        <p>Prototyped embedded systems with ESP32, RP2040, and STM32 across multiple communication protocols. Built evaluation rigs to benchmark wireless protocols — MQTT, UDP, HTTP — capturing raw data, measuring transfer speeds, and presenting quantitative findings.</p>
+        <ul>
+          <li>Prototyped embedded systems with ESP32, RP2040, and STM32 across multiple communication protocols</li>
+          <li>Built evaluation rigs to benchmark wireless protocols — MQTT, UDP, HTTP</li>
+          <li>Captured raw data, measured transfer speeds, and presented quantitative findings</li>
+        </ul>
+        <div class="work-gallery">
+          <img src="images/bath/rig.jpg" alt="Evaluation rig" onclick="openLightbox(this)" onerror="this.style.display='none'">
+          <img src="images/bath/bench.jpg" alt="Bench prototype" onclick="openLightbox(this)" onerror="this.style.display='none'">
+          <div class="img-placeholder"><span>＋</span>Add images</div>
+        </div>
       </div>
+
+      <!-- MINISTRY OF SME — upload images to: images/ministry/plc.jpg -->
       <div class="timeline-item fade-in">
         <div class="period">Jun 2019 — Aug 2019</div>
         <h3>Robotics & Automation Trainee</h3>
         <div class="company">Ministry of SME Enterprises · Chennai, India</div>
-        <p>Programmed multi-brand PLCs, hard-wired industrial sensors and actuators, and supported system evaluation and firmware debugging.</p>
+        <ul>
+          <li>Programmed multi-brand PLCs for industrial automation applications</li>
+          <li>Hard-wired industrial sensors and actuators across control systems</li>
+          <li>Supported system evaluation and firmware debugging</li>
+        </ul>
+        <div class="work-gallery">
+          <img src="images/ministry/plc.jpg" alt="PLC programming" onclick="openLightbox(this)" onerror="this.style.display='none'">
+          <div class="img-placeholder"><span>＋</span>Add images</div>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
 <!-- PROJECTS -->
-<section id="projects">
+<section id="projects" style="background:var(--surface)">
   <div class="inner">
     <div class="section-label">Projects</div>
     <h2 class="section-title">Selected Work</h2>
     <div class="projects-grid">
-
       <!-- Gimbal Rover -->
       <div class="project-card fade-in">
         <div class="gallery">
@@ -235,7 +395,6 @@ footer{text-align:center;padding:2rem;font-size:.75rem;color:var(--text-dim);bor
           <p>Full electro-mechanical design of a 3-axis BLDC-motor gimbal integrated with an all-terrain rocker-bogie platform. Designed, fabricated, assembled, and tested the complete system — from CAD modelling through to a working prototype. Published in an academic journal.</p>
         </div>
       </div>
-
       <!-- ROSbot -->
       <div class="project-card fade-in">
         <div class="gallery">
@@ -254,7 +413,6 @@ footer{text-align:center;padding:2rem;font-size:.75rem;color:var(--text-dim);bor
           <p>Implemented autonomous navigation and obstacle avoidance using LiDAR, ToF/IR sensors, and image processing in ROS/Gazebo. Characterised sensor data quality and tuned the perception pipeline for uncertain environments. Also worked on multi-robot simulation with Niryo arms and mobile platforms in CoppeliaSim.</p>
         </div>
       </div>
-
       <!-- Solar EV -->
       <div class="project-card fade-in">
         <div class="gallery">
@@ -274,7 +432,6 @@ footer{text-align:center;padding:2rem;font-size:.75rem;color:var(--text-dim);bor
           <p>Designed traction and low-power voltage systems, routed the wiring harness, and tested with BLDC motor controllers and high-voltage battery packs. Led the electronics team from design through to integration and competition. Won Best Innovation Award in a national competition.</p>
         </div>
       </div>
-
       <!-- PCB Home Automation -->
       <div class="project-card fade-in">
         <div class="gallery">
@@ -295,13 +452,12 @@ footer{text-align:center;padding:2rem;font-size:.75rem;color:var(--text-dim);bor
           <p>Designed a custom PCB in Altium with power converters, optocouplers, and solid-state relays. Soldered all components by hand, wired multiple household appliances, and programmed a Wi-Fi microcontroller for control via a mobile/PC client app.</p>
         </div>
       </div>
-
     </div>
   </div>
 </section>
 
 <!-- SKILLS -->
-<section id="skills" style="background:var(--surface)">
+<section id="skills">
   <div class="inner">
     <div class="section-label">Skills</div>
     <h2 class="section-title">Technical Stack</h2>
@@ -327,7 +483,9 @@ footer{text-align:center;padding:2rem;font-size:.75rem;color:var(--text-dim);bor
           <span class="skill-tag">Depth Cameras</span>
           <span class="skill-tag">IMUs</span>
           <span class="skill-tag">IR Sensors</span>
+          <span class="skill-tag">Opto-Mechanical Sensors</span>
           <span class="skill-tag">CMOS Image Sensors</span>
+          <span class="skill-tag">IR Sensors</span>
           <span class="skill-tag">Signal Quality Analysis</span>
         </div>
       </div>
@@ -396,7 +554,7 @@ footer{text-align:center;padding:2rem;font-size:.75rem;color:var(--text-dim);bor
       </div>
       <div class="contact-item">
         <div class="contact-icon">📍</div>
-        <div><div class="label">Location</div><div class="value">Bristol, UK</div></div>
+        <div><div class="label">Location</div><div class="value">UK</div></div>
       </div>
     </div>
   </div>
@@ -404,7 +562,15 @@ footer{text-align:center;padding:2rem;font-size:.75rem;color:var(--text-dim);bor
 
 <footer>
   <p>Ashwin Kumar — Mechatronics & Robotics Engineer</p>
+  <div class="footer-links">
+    <a href="mailto:ashwin.kumar.11@outlook.com">Email</a>
+    <a href="https://www.linkedin.com/in/ashwin-kumar-ak11/" target="_blank">LinkedIn</a>
+    <a href="#about">Back to top ↑</a>
+  </div>
 </footer>
+
+<!-- BACK TO TOP -->
+<button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">↑</button>
 
 <!-- LIGHTBOX -->
 <div class="lightbox" id="lightbox" onclick="closeLightbox()">
@@ -412,21 +578,77 @@ footer{text-align:center;padding:2rem;font-size:.75rem;color:var(--text-dim);bor
 </div>
 
 <script>
-// Lightbox
-function openLightbox(el){
-  document.getElementById('lightbox-img').src=el.src;
+// ── Typewriter for hero tag ──
+const roles = [
+  'Mechatronics & Robotics Engineer',
+  'New Product Innovation and Design',
+  'Embedded Systems Engineer',
+  'ISO 13485 Medical Devices'
+];
+let roleIndex = 0, charIndex = 0, deleting = false;
+const tagEl = document.getElementById('heroTag');
+function typeWriter() {
+  const current = roles[roleIndex];
+  if (!deleting) {
+    tagEl.textContent = current.slice(0, ++charIndex);
+    if (charIndex === current.length) { deleting = true; setTimeout(typeWriter, 2200); return; }
+  } else {
+    tagEl.textContent = current.slice(0, --charIndex);
+    if (charIndex === 0) { deleting = false; roleIndex = (roleIndex + 1) % roles.length; }
+  }
+  setTimeout(typeWriter, deleting ? 45 : 75);
+}
+typeWriter();
+
+// ── Scroll progress bar ──
+window.addEventListener('scroll', () => {
+  const scrolled = window.scrollY;
+  const total = document.documentElement.scrollHeight - window.innerHeight;
+  document.getElementById('scrollProgress').style.width = (scrolled / total * 100) + '%';
+
+  // Back to top
+  const btn = document.getElementById('backToTop');
+  scrolled > 500 ? btn.classList.add('visible') : btn.classList.remove('visible');
+
+  // Active nav links
+  const sections = ['about','education','experience','projects','skills','contact'];
+  let current = '';
+  sections.forEach(id => {
+    const el = document.getElementById(id);
+    if (el && scrolled >= el.offsetTop - 120) current = id;
+  });
+  document.querySelectorAll('nav .links a').forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+  });
+});
+
+// ── Mobile hamburger ──
+const menuToggle = document.getElementById('menuToggle');
+const mobileNav = document.getElementById('mobileNav');
+menuToggle.addEventListener('click', () => {
+  menuToggle.classList.toggle('open');
+  mobileNav.classList.toggle('open');
+});
+function closeMobileNav() {
+  menuToggle.classList.remove('open');
+  mobileNav.classList.remove('open');
+}
+
+// ── Lightbox ──
+function openLightbox(el) {
+  document.getElementById('lightbox-img').src = el.src;
   document.getElementById('lightbox').classList.add('active');
 }
-function closeLightbox(){
+function closeLightbox() {
   document.getElementById('lightbox').classList.remove('active');
 }
-document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLightbox()});
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
 
-// Scroll animations
-const observer=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target)}})
-},{threshold:0.1});
-document.querySelectorAll('.fade-in').forEach(el=>observer.observe(el));
+// ── Scroll animations ──
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+}, { threshold: 0.08 });
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 </script>
 </body>
 </html>
