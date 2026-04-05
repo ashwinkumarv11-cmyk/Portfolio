@@ -191,6 +191,15 @@ footer .footer-links a:hover{color:var(--accent)}
   .hero::after{width:300px;height:300px;right:-5%}
 }
 
+/* CURSOR GLOW */
+.cursor-glow{position:fixed;width:380px;height:380px;border-radius:50%;background:radial-gradient(circle,rgba(74,158,255,.07) 0%,transparent 68%);pointer-events:none;z-index:1;transform:translate(-50%,-50%);transition:left .08s ease,top .08s ease;will-change:left,top}
+
+/* PARTICLE CANVAS */
+#particle-canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0}
+
+/* 3D TILT */
+.project-card,.skill-group,.edu-card{transform-style:preserve-3d;will-change:transform}
+
 /* ANIMATIONS */
 .fade-in{opacity:0;transform:translateY(22px);transition:opacity .65s,transform .65s}
 .fade-in.visible{opacity:1;transform:translateY(0)}
@@ -209,8 +218,8 @@ footer .footer-links a:hover{color:var(--accent)}
       <a href="#about">About</a>
       <a href="#education">Education</a>
       <a href="#experience">Experience</a>
-      <a href="#projects">Projects</a>
       <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
       <a href="#contact">Contact</a>
     </div>
     <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
@@ -222,14 +231,15 @@ footer .footer-links a:hover{color:var(--accent)}
     <a href="#about" onclick="closeMobileNav()">About</a>
     <a href="#education" onclick="closeMobileNav()">Education</a>
     <a href="#experience" onclick="closeMobileNav()">Experience</a>
-    <a href="#projects" onclick="closeMobileNav()">Projects</a>
     <a href="#skills" onclick="closeMobileNav()">Skills</a>
+    <a href="#projects" onclick="closeMobileNav()">Projects</a>
     <a href="#contact" onclick="closeMobileNav()">Contact</a>
   </div>
 </nav>
 
 <!-- HERO -->
 <section class="hero">
+  <canvas id="particle-canvas"></canvas>
   <div class="inner">
     <div>
       <div class="tag" id="heroTag"></div>
@@ -261,7 +271,7 @@ footer .footer-links a:hover{color:var(--accent)}
       <div class="stats fade-in">
         <div class="stat"><div class="num">3+</div><div class="label">Years Experience</div></div>
         <div class="stat"><div class="num">PCB</div><div class="label">Design & Assembly</div></div>
-        <div class="stat"><div class="num">CAD</div><div class="label">Prototyping & 3D Printing</div></div>
+        <div class="stat"><div class="num">CAD</div><div class="label">3D Printing · Silicone & Injection Moulding · Vacuum & Thermoforming</div></div>
         <div class="stat"><div class="num">ISO</div><div class="label">13485 / 14971 / 10993</div></div>
       </div>
     </div>
@@ -324,6 +334,7 @@ footer .footer-links a:hover{color:var(--accent)}
         <h3>Robotics Engineer</h3>
         <div class="company">Momentum Scooters · Bristol, UK</div>
         <ul>
+          <li>Contributed to the design and integration of an assistive mobility device — a self-balancing scooter platform engineered to provide safe, accessible transportation for users with mobility impairments</li>
           <li>Designed PCB layout for ARM Cortex-M7 real-time sensing system</li>
           <li>Installed the electrical wiring harness for the traction system</li>
           <li>Tested and troubleshot the BLDC motor-driver subsystem, tracing faults across power and signal domains</li>
@@ -341,9 +352,8 @@ footer .footer-links a:hover{color:var(--accent)}
         <h3>Research Assistant (Grade 6)</h3>
         <div class="company">University of Bath · Bath, UK</div>
         <ul>
-          <li>Prototyped embedded systems with ESP32, RP2040, and STM32 across multiple communication protocols</li>
-          <li>Built evaluation rigs to benchmark wireless protocols — MQTT, UDP, HTTP</li>
-          <li>Captured raw data, measured transfer speeds, and presented quantitative findings</li>
+          <li>Prototyping embedded systems using single & dual core microcontrollers (ESP32, ESP8266, RP2040, STM32, Raspberry Pi, Arduino Uno, Nano IoT) and sensors (analogue and digital) using serial communication protocols (BLE, I2C, SPI, UART, CAN)</li>
+          <li>Reporting, documenting, performing, and presenting in-depth research on data transfer speeds, security and reliability of multiple wireless communication protocols (MQTT, UDP, HTTP)</li>
         </ul>
         <div class="work-gallery">
           <img src="images/bath/rig.jpg" alt="Evaluation rig" onclick="openLightbox(this)" onerror="this.style.display='none'">
@@ -371,8 +381,86 @@ footer .footer-links a:hover{color:var(--accent)}
   </div>
 </section>
 
+<!-- SKILLS -->
+<section id="skills" style="background:var(--surface)">
+  <div class="inner">
+    <div class="section-label">Skills</div>
+    <h2 class="section-title">Technical Stack</h2>
+    <div class="skills-grid">
+      <div class="skill-group fade-in">
+        <h3>Diagnostics & Instrumentation</h3>
+        <div class="skill-tags">
+          <span class="skill-tag">Oscilloscopes</span>
+          <span class="skill-tag">Signal Analysers</span>
+          <span class="skill-tag">Spectrum Analysers</span>
+          <span class="skill-tag">Logic Analysers</span>
+          <span class="skill-tag">Multimeters</span>
+          <span class="skill-tag">SMD Soldering (0201)</span>
+          <span class="skill-tag">Harness Wiring</span>
+          <span class="skill-tag">Fixture & Jig Design</span>
+        </div>
+      </div>
+      <div class="skill-group fade-in">
+        <h3>Sensors & Perception</h3>
+        <div class="skill-tags">
+          <span class="skill-tag">2D/3D LiDAR</span>
+          <span class="skill-tag">ToF Sensors</span>
+          <span class="skill-tag">Depth Cameras</span>
+          <span class="skill-tag">IMUs</span>
+          <span class="skill-tag">IR Sensors</span>
+          <span class="skill-tag">Opto-Mechanical Sensors</span>
+          <span class="skill-tag">CMOS Image Sensors</span>
+          <span class="skill-tag">IR Sensors</span>
+          <span class="skill-tag">Signal Quality Analysis</span>
+        </div>
+      </div>
+      <div class="skill-group fade-in">
+        <h3>Embedded & Software</h3>
+        <div class="skill-tags">
+          <span class="skill-tag">C/C++</span>
+          <span class="skill-tag">Python</span>
+          <span class="skill-tag">ARM Cortex-M7</span>
+          <span class="skill-tag">ESP32</span>
+          <span class="skill-tag">STM32</span>
+          <span class="skill-tag">RP2040</span>
+          <span class="skill-tag">I²C / SPI / UART / CAN</span>
+          <span class="skill-tag">BLE</span>
+          <span class="skill-tag">ROS / ROS2</span>
+          <span class="skill-tag">Linux</span>
+          <span class="skill-tag">Git</span>
+        </div>
+      </div>
+      <div class="skill-group fade-in">
+        <h3>Mechanical & Prototyping</h3>
+        <div class="skill-tags">
+          <span class="skill-tag">SolidWorks</span>
+          <span class="skill-tag">Inventor</span>
+          <span class="skill-tag">Fusion 360</span>
+          <span class="skill-tag">GD&T</span>
+          <span class="skill-tag">DFM / DFA</span>
+          <span class="skill-tag">3D Printing (Formlabs)</span>
+          <span class="skill-tag">Flex PCB (KiCad / Altium)</span>
+          <span class="skill-tag">BOM Management</span>
+        </div>
+      </div>
+      <div class="skill-group fade-in">
+        <h3>Quality & Process</h3>
+        <div class="skill-tags">
+          <span class="skill-tag">ISO 13485 QMS</span>
+          <span class="skill-tag">Design V&V</span>
+          <span class="skill-tag">ISO 14971</span>
+          <span class="skill-tag">IEC 60601</span>
+          <span class="skill-tag">EMC / EMI</span>
+          <span class="skill-tag">Fault Documentation</span>
+          <span class="skill-tag">Supplier Traceability</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- PROJECTS -->
-<section id="projects" style="background:var(--surface)">
+<section id="projects">
   <div class="inner">
     <div class="section-label">Projects</div>
     <h2 class="section-title">Selected Work</h2>
@@ -456,84 +544,6 @@ footer .footer-links a:hover{color:var(--accent)}
   </div>
 </section>
 
-<!-- SKILLS -->
-<section id="skills">
-  <div class="inner">
-    <div class="section-label">Skills</div>
-    <h2 class="section-title">Technical Stack</h2>
-    <div class="skills-grid">
-      <div class="skill-group fade-in">
-        <h3>Diagnostics & Instrumentation</h3>
-        <div class="skill-tags">
-          <span class="skill-tag">Oscilloscopes</span>
-          <span class="skill-tag">Signal Analysers</span>
-          <span class="skill-tag">Spectrum Analysers</span>
-          <span class="skill-tag">Logic Analysers</span>
-          <span class="skill-tag">Multimeters</span>
-          <span class="skill-tag">SMD Soldering (0201)</span>
-          <span class="skill-tag">Harness Wiring</span>
-          <span class="skill-tag">Fixture & Jig Design</span>
-        </div>
-      </div>
-      <div class="skill-group fade-in">
-        <h3>Sensors & Perception</h3>
-        <div class="skill-tags">
-          <span class="skill-tag">2D/3D LiDAR</span>
-          <span class="skill-tag">ToF Sensors</span>
-          <span class="skill-tag">Depth Cameras</span>
-          <span class="skill-tag">IMUs</span>
-          <span class="skill-tag">IR Sensors</span>
-          <span class="skill-tag">Opto-Mechanical Sensors</span>
-          <span class="skill-tag">CMOS Image Sensors</span>
-          <span class="skill-tag">IR Sensors</span>
-          <span class="skill-tag">Signal Quality Analysis</span>
-        </div>
-      </div>
-      <div class="skill-group fade-in">
-        <h3>Embedded & Software</h3>
-        <div class="skill-tags">
-          <span class="skill-tag">C/C++</span>
-          <span class="skill-tag">Python</span>
-          <span class="skill-tag">ARM Cortex-M7</span>
-          <span class="skill-tag">ESP32</span>
-          <span class="skill-tag">STM32</span>
-          <span class="skill-tag">RP2040</span>
-          <span class="skill-tag">I²C / SPI / UART / CAN</span>
-          <span class="skill-tag">BLE</span>
-          <span class="skill-tag">ROS / ROS2</span>
-          <span class="skill-tag">Linux</span>
-          <span class="skill-tag">Git</span>
-        </div>
-      </div>
-      <div class="skill-group fade-in">
-        <h3>Mechanical & Prototyping</h3>
-        <div class="skill-tags">
-          <span class="skill-tag">SolidWorks</span>
-          <span class="skill-tag">Inventor</span>
-          <span class="skill-tag">Fusion 360</span>
-          <span class="skill-tag">GD&T</span>
-          <span class="skill-tag">DFM / DFA</span>
-          <span class="skill-tag">3D Printing (Formlabs)</span>
-          <span class="skill-tag">Flex PCB (KiCad / Altium)</span>
-          <span class="skill-tag">BOM Management</span>
-        </div>
-      </div>
-      <div class="skill-group fade-in">
-        <h3>Quality & Process</h3>
-        <div class="skill-tags">
-          <span class="skill-tag">ISO 13485 QMS</span>
-          <span class="skill-tag">Design V&V</span>
-          <span class="skill-tag">ISO 14971</span>
-          <span class="skill-tag">IEC 60601</span>
-          <span class="skill-tag">EMC / EMI</span>
-          <span class="skill-tag">Fault Documentation</span>
-          <span class="skill-tag">Supplier Traceability</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- CONTACT -->
 <section id="contact" class="contact-section">
   <div class="inner">
@@ -611,7 +621,7 @@ window.addEventListener('scroll', () => {
   scrolled > 500 ? btn.classList.add('visible') : btn.classList.remove('visible');
 
   // Active nav links
-  const sections = ['about','education','experience','projects','skills','contact'];
+  const sections = ['about','education','experience','skills','projects','contact'];
   let current = '';
   sections.forEach(id => {
     const el = document.getElementById(id);
@@ -649,6 +659,93 @@ const observer = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
 }, { threshold: 0.08 });
 document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+// ── A: Floating particle canvas ──
+const canvas = document.getElementById('particle-canvas');
+const ctx = canvas.getContext('2d');
+const heroSection = canvas.parentElement;
+let particles = [];
+
+function resizeCanvas() {
+  canvas.width = heroSection.offsetWidth;
+  canvas.height = heroSection.offsetHeight;
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+function createParticles() {
+  particles = [];
+  const count = Math.floor((canvas.width * canvas.height) / 18000);
+  for (let i = 0; i < count; i++) {
+    particles.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      r: Math.random() * 1.8 + 0.4,
+      dx: (Math.random() - 0.5) * 0.35,
+      dy: (Math.random() - 0.5) * 0.35,
+      opacity: Math.random() * 0.5 + 0.15
+    });
+  }
+}
+createParticles();
+
+function drawParticles() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  particles.forEach(p => {
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(74,158,255,${p.opacity})`;
+    ctx.fill();
+
+    // Draw connecting lines to nearby particles
+    particles.forEach(p2 => {
+      const dist = Math.hypot(p.x - p2.x, p.y - p2.y);
+      if (dist < 100) {
+        ctx.beginPath();
+        ctx.strokeStyle = `rgba(74,158,255,${0.06 * (1 - dist / 100)})`;
+        ctx.lineWidth = 0.6;
+        ctx.moveTo(p.x, p.y);
+        ctx.lineTo(p2.x, p2.y);
+        ctx.stroke();
+      }
+    });
+
+    p.x += p.dx;
+    p.y += p.dy;
+    if (p.x < 0 || p.x > canvas.width) p.dx *= -1;
+    if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
+  });
+  requestAnimationFrame(drawParticles);
+}
+drawParticles();
+
+// ── C: 3D card tilt ──
+document.querySelectorAll('.project-card, .skill-group, .edu-card').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const cx = rect.width / 2;
+    const cy = rect.height / 2;
+    const rotX = ((y - cy) / cy) * 5;
+    const rotY = ((cx - x) / cx) * 5;
+    card.style.transform = `perspective(700px) rotateX(${rotX}deg) rotateY(${rotY}deg) translateY(-3px)`;
+  });
+  card.addEventListener('mouseleave', () => {
+    card.style.transform = '';
+  });
+});
+
+// ── D: Cursor glow ──
+const glow = document.createElement('div');
+glow.className = 'cursor-glow';
+document.body.appendChild(glow);
+let mx = 0, my = 0;
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  glow.style.left = mx + 'px';
+  glow.style.top = my + 'px';
+});
 </script>
 </body>
 </html>
